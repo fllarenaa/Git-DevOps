@@ -1,0 +1,23 @@
+
+name: Pipeline Python
+
+on: [push, pull_request]
+
+jobs:
+  executar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verificar sintaxe
+        run: python -m py_compile main.py
+
+      - name: Executar programa
+        run: python main.py
