@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Científica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="calculadora">
+        <h1>Calculadora Científica</h1>
+
+        <input
+            type="text"
+            id="visor"
+            value="0"
+            readonly
+            aria-label="Visor da calculadora"
+        >
+
+        <div class="botoes">
+            <button data-acao="limpar" class="especial">AC</button>
+            <button data-acao="sinal">+/-</button>
+            <button data-acao="operador" data-valor="/">÷</button>
+            <button data-acao="operador" data-valor="*">×</button>
+
+            <button data-acao="numero" data-valor="7">7</button>
+            <button data-acao="numero" data-valor="8">8</button>
+            <button data-acao="numero" data-valor="9">9</button>
+            <button data-acao="operador" data-valor="-">−</button>
+
+            <button data-acao="numero" data-valor="4">4</button>
+            <button data-acao="numero" data-valor="5">5</button>
+            <button data-acao="numero" data-valor="6">6</button>
+            <button data-acao="operador" data-valor="+">+</button>
+
+            <button data-acao="numero" data-valor="1">1</button>
+            <button data-acao="numero" data-valor="2">2</button>
+            <button data-acao="numero" data-valor="3">3</button>
+            <button data-acao="igual" class="igual">=</button>
+
+            <button data-acao="numero" data-valor="0" class="zero">0</button>
+            <button data-acao="decimal">.</button>
+
+            <button data-acao="cientifica" data-valor="sqrt">√x</button>
+            <button data-acao="cientifica" data-valor="square">x²</button>
+            <button data-acao="cientifica" data-valor="sin">sin</button>
+            <button data-acao="cientifica" data-valor="cos">cos</button>
+            <button data-acao="cientifica" data-valor="tan">tan</button>
+            <button data-acao="cientifica" data-valor="log">log</button>
+            <button data-acao="cientifica" data-valor="ln">ln</button>
+            <button data-acao="constante" data-valor="pi">π</button>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
