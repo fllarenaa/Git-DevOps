@@ -1,23 +1,31 @@
 
-name: Pipeline Python
+name: Pipeline - Calculadora Científica
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
-  executar:
+  testes:
+    name: Testes automatizados
     runs-on: ubuntu-latest
 
     steps:
-      - name: Baixar codigo
+      - name: Baixar o código
         uses: actions/checkout@v4
 
-      - name: Configurar Python
-        uses: actions/setup-python@v5
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
         with:
-          python-version: '3.12'
+          node-version: 22
 
-      - name: Verificar sintaxe
-        run: python -m py_compile main.py
+      - name: Verificar versão do Node.js
+        run: node --version
 
-      - name: Executar programa
-        run: python main.py
+      - name: Executar testes
+        run: node --test calculations.test.js
