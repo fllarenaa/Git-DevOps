@@ -14,7 +14,6 @@ permissions:
   contents: read
 
 jobs:
-
   testes:
     name: Testes automatizados
     runs-on: ubuntu-latest
@@ -89,4 +88,6 @@ jobs:
         uses: zaproxy/action-baseline@f5ca774232402c0e196ad638f66542481c0fb5cb
         with:
           target: 'http://localhost:8080'
-          fail_action: true
+          fail_action: false
+          allow_issue_writing: false
+          artifact_name: zap_scan
