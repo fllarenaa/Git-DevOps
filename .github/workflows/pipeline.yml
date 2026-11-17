@@ -11,6 +11,7 @@ on:
   workflow_dispatch:
 
 jobs:
+
   testes:
     name: Testes automatizados
     runs-on: ubuntu-latest
@@ -29,3 +30,61 @@ jobs:
 
       - name: Executar testes
         run: node --test calculations.test.js
+
+
+  sast:
+    name: SAST - Semgrep
+    runs-on: ubuntu-latest
+    needs: testes
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar Semgrep
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install semgrep
+
+      - name: Executar análise SAST
+        run: semgrep scan --config auto --error .
+
+  dast:
+    name: DAST - OWASP ZAP
+    runs-on: ubuntu-latest
+    needs: sast
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Iniciar aplicação
+        run: |
+          nohup python3 -m http.server 8080 \
+            --bind 0.0.0.0 \
+            --directory . > /tmp/server.log 2>&1 &
+
+      - name: Aguardar aplicação iniciar
+        run: |
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:8080/ > /dev/null; then
+              echo "Aplicação iniciada com sucesso!"
+              exit 0
+            fi
+            sleep 2
+          done
+
+          echo "Erro ao iniciar aplicação!"
+          cat /tmp/server.log
+          exit 1
+
+      - name: Executar análise DAST - OWASP ZAP
+        uses: zaproxy/action-baseline@v0.15.0
+        with:
+          target: 'http://localhost:8080'
+          fail_action: true
