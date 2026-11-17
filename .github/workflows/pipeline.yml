@@ -10,6 +10,9 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
 
   testes:
@@ -18,10 +21,10 @@ jobs:
 
     steps:
       - name: Baixar o código
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Configurar Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 22
 
@@ -31,7 +34,6 @@ jobs:
       - name: Executar testes
         run: node --test calculations.test.js
 
-
   sast:
     name: SAST - Semgrep
     runs-on: ubuntu-latest
@@ -39,10 +41,10 @@ jobs:
 
     steps:
       - name: Baixar o código
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Configurar Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.12'
 
@@ -61,7 +63,7 @@ jobs:
 
     steps:
       - name: Baixar o código
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Iniciar aplicação
         run: |
@@ -84,7 +86,7 @@ jobs:
           exit 1
 
       - name: Executar análise DAST - OWASP ZAP
-        uses: zaproxy/action-baseline@v0.15.0
+        uses: zaproxy/action-baseline@f5ca774232402c0e196ad638f66542481c0fb5cb
         with:
           target: 'http://localhost:8080'
           fail_action: true
