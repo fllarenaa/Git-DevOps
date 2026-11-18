@@ -32,3 +32,7 @@ function seno(graus) {
 if (typeof module !== "undefined") {
     module.exports = { calcular, raizQuadrada, seno };
 }
+
+function calcExpressao(expressao) {
+    return eval(expressao);
+}
